@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼일중 Python Survival - if문 & while문 마스터</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background-color: #0f172a; color: #f8fafc; overflow-y: scroll; }
+        
+        /* 탭 및 애니메이션 */
+        .tab-btn { transition: all 0.3s ease; border-bottom: 4px solid transparent; }
+        .tab-btn.active { color: #4ade80; border-bottom: 4px solid #4ade80; background-color: #1e293b; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 라디오 버튼 커스텀 (게이밍 테마) */
+        .option-label { transition: all 0.2s; border: 2px solid #334155; }
+        .option-label:hover { border-color: #4ade80; background-color: #1e293b; transform: translateX(5px); }
+        input[type="radio"] { display: none; }
+        input[type="radio"]:checked + .option-text { font-weight: bold; color: #4ade80; }
+        .option-label:has(input[type="radio"]:checked) { border-color: #4ade80; background-color: #064e3b; box-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
+        
+        .feedback-box { display: none; margin-top: 12px; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1.05em; animation: fadeIn 0.3s; }
+        .feedback-correct { background-color: #14532d; color: #4ade80; border: 1px solid #4ade80; }
+        .feedback-incorrect { background-color: #7f1d1d; color: #fca5a5; border: 1px solid #f87171; }
+        .explanation-text { font-size: 0.9em; font-weight: normal; margin-top: 8px; color: #e2e8f0; line-height: 1.5; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- 점수판 (스크롤 시 우측 상단 고정) -->
+    <div class="fixed top-4 right-4 bg-slate-800 border-2 border-yellow-400 text-yellow-400 font-bold px-4 py-2 rounded-xl shadow-lg z-50 text-lg md:text-xl flex items-center gap-2 transition-all duration-300" id="score-box">
+        🏆 점수: <span id="score-value">0</span> 점
+    </div>
+
+    <header class="max-w-6xl mx-auto pt-10 pb-6 px-4 text-center">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-300 to-blue-500 mb-3 drop-shadow-lg">
+            🐍 삼일중 Python Survival: if & while
+        </h1>
+        <p class="text-slate-400 text-base md:text-lg mb-2">기초 문법 복습부터 조건문(if)과 반복문(while) 버그 헌팅까지!</p>
+    </header>
+
+    <!-- 네비게이션 탭 -->
+    <nav class="max-w-6xl mx-auto px-4 mb-8">
+        <div class="flex flex-wrap justify-center bg-slate-800 rounded-xl p-2 gap-1 md:gap-2 shadow-xl border border-slate-700">
+            <button class="tab-btn active px-3 py-2 md:px-4 md:py-3 rounded-lg font-bold text-slate-300 hover:text-white flex items-center gap-1" onclick="openTab('sec-0', this)">
+                <span>📘 1. 6대 문법 복습</span>
+            </button>
+            <button class="tab-btn px-3 py-2 md:px-4 md:py-3 rounded-lg font-bold text-slate-300 hover:text-white flex items-center gap-1" onclick="openTab('sec-02', this)">
+                <span>💡 2. 신규 개념 (IF & WHILE)</span>
+            </button>
+            <div class="w-px bg-slate-600 my-2"></div>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-1', this)">1. PRINT (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-2', this)">2. 변수 (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-3', this)">3. INPUT (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-4', this)">4. INT (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-5', this)">5. F-STRING (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-6', this)">6. FOR (5문)</button>
+            <div class="w-px bg-slate-600 my-2"></div>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-yellow-400 hover:text-yellow-300 border border-yellow-500/30 bg-yellow-500/10" onclick="openTab('sec-7', this)">7. IF문 (10문)⭐</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 bg-cyan-500/10" onclick="openTab('sec-8', this)">8. WHILE문 (10문)⭐</button>
+        </div>
+    </nav>
+
+    <main id="main-content" class="max-w-6xl mx-auto px-4">
+        
+        <!-- ==================== SHEET 1: 이전 시간 핵심 문법 6가지 복습 ==================== -->
+        <div id="sec-0" class="tab-content active space-y-8">
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-2xl">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-green-400 mb-6 flex items-center gap-3">
+                    🔄 이전 시간 핵심 문법 6가지 쾌속 복습
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">1. PRINT (컴퓨터의 입 👄)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">화면에 글자나 숫자를 출력. 문자는 따옴표 필수!</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">print("안녕!") <span class="text-slate-500"># 안녕!</span></div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">2. 변수 (기억 상자 📦)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">오른쪽 값을 왼쪽 이름표 상자에 저장 (`=` 대입).</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">score = 100</div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">3. INPUT (컴퓨터의 귀 👂)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">키보드 입력을 기다림. 결과는 무조건 '문자열'.</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">name = input("이름: ")</div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">4. INT (숫자 번역기 🔢)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">문자열 형태의 숫자를 진짜 계산 가능한 정수로 변환.</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">age = int(input("나이: "))</div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">5. F-STRING (문장 조립 🪄)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">따옴표 앞에 `f`, 변수는 `{중괄호}` 안에 삽입.</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">print(f"안녕 {name}")</div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-700">
+                        <div class="text-xl md:text-2xl text-green-400 font-extrabold mb-2">6. FOR (쳇바퀴 반복 🎡)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">정해진 횟수만큼 차례대로 반복 (`range(5)` = 0~4).</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">for i in range(3): print(i)</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SHEET 2: 신규 개념 (IF문 & WHILE문) ==================== -->
+        <div id="sec-02" class="tab-content space-y-10">
+            
+            <!-- 1. [신규 개념] IF문 : 선택의 신호등 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-yellow-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <div class="inline-block bg-yellow-500/20 text-yellow-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 1</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-yellow-400">1. if문 (조건문) : 갈림길 신호등 🚦</h2>
+                    <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
+                        "만약 ~라면 A를 하고, 아니면 B를 해라!" 상황에 따라 다른 행동을 하도록 기계에게 판단력을 선물하는 문법입니다.
+                    </p>
+                    
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-3 text-base md:text-lg">
+                        <div class="text-yellow-300 font-bold text-lg md:text-xl">⚠️ 중학생이 가장 많이 틀리는 핵심 규칙 3가지:</div>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li><span class="text-white font-bold">콜론(:) 필수:</span> <code class="text-yellow-300 font-bold">if 조건:</code> 끝에 반드시 쌍점(:)을 찍어야 합니다!</li>
+                            <li><span class="text-white font-bold">들여쓰기(Indentation):</span> 조건 아래 실행할 코드는 <span class="bg-slate-800 px-2 py-0.5 rounded text-yellow-300 font-bold">[Tab]</span>키나 공백 4칸으로 쑥 집어넣어야 합니다.</li>
+                            <li><span class="text-white font-bold">비교 연산자:</span> '같다'는 `=`가 아니라 <code class="text-green-400 font-bold text-xl">==</code> 두 번!</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
+                        age = <span class="text-yellow-300">int</span>(<span class="text-yellow-300">input</span>("나이 입력: "))<br>
+                        <span class="text-purple-400 font-bold">if</span> age &gt;= 14:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>("청소년입니다!") &nbsp;<span class="text-slate-500 text-base md:text-lg"># 참일 때</span><br>
+                        <span class="text-purple-400 font-bold">else</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>("어린이입니다!") &nbsp;<span class="text-slate-500 text-base md:text-lg"># 거짓일 때</span>
+                    </div>
+                </div>
+
+                <!-- SVG 일러스트: 신호등/갈림길 -->
+                <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
+                    <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
+                        <!-- Traffic Light Box -->
+                        <rect x="15" y="15" width="55" height="130" rx="12" fill="#1e293b" stroke="#facc15" stroke-width="3"/>
+                        <circle cx="42" cy="42" r="14" fill="#ef4444"/> <!-- Red -->
+                        <circle cx="42" cy="80" r="14" fill="#eab308"/> <!-- Yellow -->
+                        <circle cx="42" cy="118" r="14" fill="#22c55e"/> <!-- Green -->
+                        
+                        <!-- Branching Path -->
+                        <path d="M 90 80 Q 120 80 140 40 L 195 40" fill="none" stroke="#ef4444" stroke-width="5" stroke-dasharray="5"/>
+                        <path d="M 90 80 Q 120 80 140 120 L 195 120" fill="none" stroke="#22c55e" stroke-width="5"/>
+                        
+                        <text x="160" y="30" font-family="sans-serif" font-size="14" fill="#fca5a5" font-weight="bold">거짓 (NO)</text>
+                        <text x="160" y="142" font-family="sans-serif" font-size="14" fill="#86efac" font-weight="bold">참 (YES)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 2. [신규 개념] WHILE문 : 조건부 도돌이표 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-cyan-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <div class="inline-block bg-cyan-500/20 text-cyan-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 2</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-cyan-400">2. while문 (반복문) : 무한 탈곡기 도돌이표 🔄</h2>
+                    <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
+                        "조건이 참(True)인 동안 계속 코드를 돌려라!" 몬스터의 체력이 0이 될 때까지 계속 공격하거나, 정답을 맞힐 때까지 퀴즈를 반복할 때 사용합니다.
+                    </p>
+
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-3 text-base md:text-lg">
+                        <div class="text-cyan-300 font-bold text-lg md:text-xl">🚨 베테랑 엔지니어의 경고: 무한루프(Infinite Loop)를 조심해!</div>
+                        <p class="text-slate-200 leading-relaxed">
+                            `while`문은 조건이 거짓이 되지 않으면 컴퓨터가 멈출 때까지 계속 돕니다! 반드시 반복문 안에서 조건을 변경해주거나(예: <code class="text-yellow-300 font-bold">hp -= 10</code>), 탈출 조건(`break` 등)을 만들어주어야 합니다.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
+                        hp = 30 &nbsp;<span class="text-slate-500 text-base md:text-lg"># 몬스터 체력</span><br>
+                        <span class="text-purple-400 font-bold">while</span> hp &gt; 0:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>(f"공격! 남아있는 HP: {hp}")<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;hp = hp - 10 &nbsp;<span class="text-yellow-300 text-base md:text-lg"># 체력 감소 필수!</span><br>
+                        <span class="text-blue-400">print</span>("몬스터 처치 완료!")
+                    </div>
+                </div>
+
+                <!-- SVG 일러스트: 무한 챗바퀴 / 루프 -->
+                <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
+                    <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
+                        <!-- Looping Circle -->
+                        <path d="M 110 25 A 48 48 0 1 1 60 75" fill="none" stroke="#22d3ee" stroke-width="7" stroke-linecap="round"/>
+                        <polygon points="60,62 60,88 42,75" fill="#22d3ee"/>
+                        
+                        <text x="110" y="72" font-family="sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">조건 참(True)</text>
+                        <text x="110" y="93" font-family="sans-serif" font-size="12" fill="#22d3ee" font-weight="bold" text-anchor="middle">⚡ 계속 반복 ⚡</text>
+                        
+                        <!-- Exit Arrow -->
+                        <path d="M 158 75 L 195 75" fill="none" stroke="#ef4444" stroke-width="5" stroke-dasharray="4"/>
+                        <polygon points="195,68 207,75 195,82" fill="#ef4444"/>
+                        <text x="175" y="62" font-family="sans-serif" font-size="12" fill="#fca5a5" font-weight="bold">거짓 -> 탈출</text>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ====================문제 컨테이너 (시트 3~10) ==================== -->
+        <div id="sec-1" class="tab-content"><div id="quiz-container-1" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-2" class="tab-content"><div id="quiz-container-2" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-3" class="tab-content"><div id="quiz-container-3" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-4" class="tab-content"><div id="quiz-container-4" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-5" class="tab-content"><div id="quiz-container-5" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-6" class="tab-content"><div id="quiz-container-6" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-7" class="tab-content"><div id="quiz-container-7" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-8" class="tab-content"><div id="quiz-container-8" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+
+    </main>
+
+    <script>
+        // 총 50개 문제 데이터베이스
+        const quizData = {
+            1: [ // PRINT (5문제)
+                { q: "print('파이썬', '재밌다') 코드를 실행했을 때 출력 결과는 무엇일까요?", options: ["파이썬재밌다", "파이썬 재밌다", "'파이썬' '재밌다'", "에러 발생"], ans: 1, exp: "print() 안에 쉼표(,)를 쓰면 항목 사이에 자동으로 한 칸 띄어쓰기가 들어갑니다." },
+                { q: "다음 중 숫자 계산 결과인 30을 출력하는 올바른 코드는?", options: ["print('10 + 20')", "print(\"10 + 20\")", "print(10 + 20)", "print(1020)"], ans: 2, exp: "따옴표를 붙이면 문자열로 취급되어 글자 그대로 출력되고, 따옴표가 없어야 실제 수학 계산이 됩니다." },
+                { q: "역슬래시 하나(\\ )를 화면에 출력하고 싶을 때 따옴표 안에 어떻게 적어야 할까요?", options: ["\\", "\\\\", "/\\", "\\/"], ans: 1, exp: "역슬래시는 특수 기호 마법을 해제하기 위해 두 번(\\\\) 써야 1개가 출력됩니다." },
+                { q: "다음 코드 중 문법 에러(SyntaxError)가 발생하는 것은?", options: ["print(100)", "print(\"100\")", "print(안녕)", "print('안녕')"], ans: 2, exp: "문자 안녕을 출력할 때 따옴표를 안 붙이면 파이썬은 변수로 오인하여 에러를 냅니다." },
+                { q: "print('A')<br>print('B')<br>위 코드를 실행하면 어떻게 출력될까요?", options: ["AB", "A와 B가 각각 다른 줄에 출력", "A B", "B A"], ans: 1, exp: "print() 명령은 실행을 마친 뒤 자동으로 줄바꿈(엔터)을 수행합니다." }
+            ],
+            2: [ // 변수 (5문제)
+                { q: "score = 50<br>score = 100<br>print(score)<br>출력 결과는 무엇일까요?", options: ["50", "100", "150", "에러"], ans: 1, exp: "변수는 하나의 값만 기억하는 상자입니다. 새 값을 넣으면 이전 값은 지워집니다(덮어쓰기)." },
+                { q: "파이썬에서 변수 이름으로 사용할 수 '없는' 것은?", options: ["my_age", "score1", "1st_place", "User_Name"], ans: 2, exp: "변수 이름의 첫 글자에는 숫자가 올 수 없습니다." },
+                { q: "a = 10<br>b = a<br>a = 20<br>print(b)의 출력 결과는?", options: ["10", "20", "a", "b"], ans: 0, exp: "b = a 시점에 a에 들어있던 값 10이 b에 복사되었으므로, 나중에 a가 바뀌어도 b는 10입니다." },
+                { q: "코딩에서 x = 5 의 의미로 가장 올바른 것은?", options: ["x와 5는 완전히 같다", "오른쪽의 5를 왼쪽 x 상자에 저장해라", "왼쪽 x를 오른쪽 5에 저장해라", "x가 5인지 확인해라"], ans: 1, exp: "등호(=)는 대입 연산자로, 오른쪽 값을 왼쪽 변수에 보관하라는 명령입니다." },
+                { q: "변수 x, y의 값을 서로 맞바꾸는 코드로 올바른 것은? (x, y = 3, 5)", options: ["x = y; y = x", "temp = x; x = y; y = temp", "x = 5; y = 3", "y = x"], ans: 1, exp: "임시 보관 상자(temp)를 이용해야 데이터 유실 없이 두 변수의 값을 안전하게 교체할 수 있습니다." }
+            ],
+            3: [ // INPUT (5문제)
+                { q: "input() 함수가 사용자에게 전달받은 값의 기본 데이터 타입은?", options: ["정수(int)", "실수(float)", "문자열(str)", "참/거짓(bool)"], ans: 2, exp: "input()으로 입력받은 데이터는 숫자를 입력하더라도 무조건 '문자열'로 인식됩니다." },
+                { q: "age = input('나이: ') 코드가 실행될 때 '15'를 입력하면 age에 저장되는 값은?", options: ["숫자 15", "문자열 \"15\"", "나이: 15", "에러"], ans: 1, exp: "키보드로 친 15는 문자가 씌워진 문자열 \"15\" 형태로 저장됩니다." },
+                { q: "name = input('이름이 뭐야? ') 에서 '이름이 뭐야? '의 역할은?", options: ["변수 이름", "사용자 입력 안내 문구", "출력할 최종 정답", "에러 방지용 문구"], ans: 1, exp: "input() 괄호 안의 글자는 화면에 띄워 사용자에게 입력을 유도하는 프롬프트(안내문)입니다." },
+                { q: "다음 중 사용자에게 입력을 받아 food 변수에 저장하는 올바른 코드는?", options: ["input('음식: ') = food", "food == input('음식: ')", "food = input('음식: ')", "print(input('음식: '))"], ans: 2, exp: "변수 이름(food)이 왼쪽에 오고, input() 함수가 오른쪽에 위치해야 합니다." },
+                { q: "x = input()<br>y = input()<br>사용자가 3과 4를 차례로 입력하고 print(x + y)를 실행하면?", options: ["7", "34", "\"7\"", "에러"], ans: 1, exp: "x, y 모두 문자열(\"3\", \"4\")이므로 + 기호는 숫자의 덧셈이 아니라 글자 이어붙이기(\"34\")가 됩니다." }
+            ],
+            4: [ // INT (5문제)
+                { q: "int('50') + int('30') 코드의 실행 결과는?", options: ["80", "5030", "\"80\"", "에러"], ans: 0, exp: "int()가 문자열 \"50\"과 \"30\"을 진짜 정수로 번역하여 50 + 30 = 80 계산이 수행됩니다." },
+                { q: "사용자에게 숫자를 입력받아 바로 진짜 정수로 저장하는 가장 완벽한 형태는?", options: ["num = input(int('숫자: '))", "num = int(input('숫자: '))", "num = int('숫자: ')", "num = input('int')"], ans: 1, exp: "input()으로 입력받은 문자열을 바깥의 int()로 감싸 번역해 주는 것이 정석입니다." },
+                { q: "num = int('hello') 코드를 실행하면 어떤 일이 벌어질까요?", options: ["hello 정수 변환 성공", "0이 출력됨", "ValueError 에러 발생", "None 반환"], ans: 2, exp: "숫자로 바꿀 수 없는 글자('hello')를 int()에 넣으면 번역할 수 없어 ValueError가 납니다." },
+                { q: "a = int(input()) 실행 후 5를 입력했을 때, a + 10의 결과는?", options: ["510", "15", "\"15\"", "에러"], ans: 1, exp: "int()를 통과했으므로 정수 5가 되어 5 + 10 = 15가 됩니다." },
+                { q: "다음 중 int() 함수에 대한 설명으로 틀린 것은?", options: ["문자열 형태의 숫자를 정수로 바꾼다.", "소수점 이하를 버리고 정수로 다듬는다.", "input()과 함께 자주 쓰인다.", "글자 '가나다'를 숫자 123으로 자동 แปล한다."], ans: 3, exp: "int()는 숫자 형태를 가진 문자열(\"123\" 등)만 정수로 변환할 수 있습니다." }
+            ],
+            5: [ // F-STRING (5문제)
+                { q: "name = '영희'<br>print(f'안녕 {name}')의 출력 결과는?", options: ["안녕 {name}", "안녕 영희", "f'안녕 영희'", "에러"], ans: 1, exp: "f-string 덕분에 {name} 자리에 변수 안의 데이터 '영희'가 쏙 들어갑니다." },
+                { q: "f-string을 사용할 때 따옴표 앞에 반드시 붙여야 하는 알파벳은?", options: ["p", "s", "f", "v"], ans: 2, exp: "Format(포맷)을 뜻하는 소문자 'f'를 따옴표 시작점 바로 앞에 써야 합니다." },
+                { q: "name = '철수'<br>print('안녕 {name}') (f를 누락함) 의 실행 결과는?", options: ["안녕 철수", "안녕 {name}", "안녕 name", "에러"], ans: 1, exp: "소문자 f를 빼먹으면 중괄호 { }가 마법을 잃고 문자 그대로 출력됩니다." },
+                { q: "print(f'10 + 20 = {10 + 20}') 의 출력 결과는?", options: ["10 + 20 = {10 + 20}", "10 + 20 = 30", "10 + 20 = 10 + 20", "에러"], ans: 1, exp: "f-string의 중괄호 { } 안에는 변수뿐만 아니라 수식도 넣을 수 있어 계산 결과 30이 들어갑니다." },
+                { q: "age = 14<br>print(f'내 나이는 {age}살') 코드로 옳은 이유는?", options: ["int() 없이도 숫자 변수를 문장에 자연스럽게 합쳐줌", "속도가 제일 느림", "따옴표가 필요 없음", "f를 뒤에 써야 함"], ans: 0, exp: "f-string은 숫자와 문자를 `+`로 이어 붙일 때 생기는 타입 에러를 깔끔하게 해결해 줍니다." }
+            ],
+            6: [ // FOR (5문제)
+                { q: "for i in range(5):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>에서 i에 들어가는 첫 번째와 마지막 숫자는?", options: ["1과 5", "0과 5", "0과 4", "1과 4"], ans: 2, exp: "range(5)는 0부터 시작하여 5 전까지(0, 1, 2, 3, 4) 총 5번 반복합니다." },
+                { q: "for i in range(1, 4):<br>&nbsp;&nbsp;&nbsp;&nbsp;print('파이썬')<br>에서 '파이썬'은 총 몇 번 출력될까요?", options: ["4번", "3번", "1번", "5번"], ans: 1, exp: "range(1, 4)는 1, 2, 3까지 총 3번 실행됩니다 (끝 숫자는 포함 안 됨)." },
+                { q: "for문 실행 시 반복할 코드 블록을 구분하기 위해 필수적인 문법 요소는?", options: ["중괄호 { }", "들여쓰기 (Indentation)", "세미콜론 ;", "대괄호 [ ]"], ans: 1, exp: "파이썬에서는 콜론(:) 아래에 들여쓰기된 코드들을 루프 식구로 인식합니다." },
+                { q: "count = 0<br>for i in range(3):<br>&nbsp;&nbsp;&nbsp;&nbsp;count = count + 1<br>print(count) 의 실행 결과는?", options: ["0", "1", "3", "4"], ans: 2, exp: "루프가 3번 돌면서 count가 1씩 3번 증가하므로 최종값은 3이 됩니다." },
+                { q: "for i in range(0, 10, 2): 에서 i의 변화 순서로 알맞은 것은?", options: ["0, 1, 2, 3...", "0, 2, 4, 6, 8", "2, 4, 6, 8, 10", "0, 5, 10"], ans: 1, exp: "range(시작, 끝, 증감) 구조이므로 0부터 시작해 2씩 증가하며 10 전(8)까지 반복합니다." }
+            ],
+            7: [ // IF문 (10문제) ⭐ NEW
+                { q: "num = 5<br>if num > 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('양수')<br>위 코드를 실행한 결과는?", options: ["양수", "음수", "아무것도 출력 안 됨", "에러"], ans: 0, exp: "num이 5이므로 조건 `num > 0`이 참(True)이 되어 '양수'가 출력됩니다." },
+                { q: "if 조건식 뒤에 반드시 붙여야 하는 문법 기호는 무엇일까요?", options: ["; (세미콜론)", ": (콜론)", ", (쉼표)", ". (마침표)"], ans: 1, exp: "파이썬의 조건문과 반복문 선언부 끝에는 반드시 쌍점 `: (콜론)`을 찍어야 합니다." },
+                { q: "age = 10<br>if age > 12:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('OK')<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('NO')<br>위 코드의 출력 결과는?", options: ["OK", "NO", "OK와 NO 둘 다", "에러"], ans: 1, exp: "age가 10이므로 `age > 12` 조건이 거짓(False)이 되어 else 블록의 'NO'가 출력됩니다." },
+                { q: "파이썬에서 'x와 y가 같다'를 표현하는 올바른 조건식은?", options: ["x = y", "x == y", "x equals y", "x := y"], ans: 1, exp: "값 저장 대입 기호는 `=`, 두 값이 같은지 비교할 때는 `==`를 써야 합니다." },
+                { q: "score = 85<br>if score >= 90:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('A')<br>elif score >= 80:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('B')<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('C')<br>출력 결과는?", options: ["A", "B", "C", "A와 B 둘 다"], ans: 1, exp: "첫번째 if(90 이상)는 거짓이지만, 두번째 elif(80 이상) 조건이 참이므로 'B'가 출력됩니다." },
+                { q: "if 문 아래 실행할 코드의 들여쓰기를 안 했을 때 발생하는 에러는?", options: ["SyntaxError", "IndentationError", "NameError", "TypeError"], ans: 1, exp: "들여쓰기(Indentation)가 빠지면 파이썬은 IndentationError를 발생시킵니다." },
+                { q: "text = 'A'<br>if text.isupper():<br>&nbsp;&nbsp;&nbsp;&nbsp;print('대문자')<br>결과는?", options: ["대문자", "소문자", "알 수 없음", "에러"], ans: 0, exp: "text.isupper()는 글자가 대문자인지 확인하여 참(True)을 반환합니다." },
+                { q: "x = 10<br>if x != 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('다르다')<br>에서 `!=` 연산자의 뜻은?", options: ["같다", "다르다", "크다", "작다"], ans: 1, exp: "`!=`는 '같지 않다(다르다)'를 비교하는 연산자입니다." },
+                { q: "num = 7<br>if num % 2 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('짝수')<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('홀수')<br>결과는?", options: ["짝수", "홀수", "7", "0"], ans: 1, exp: "7을 2로 나눈 나머지(`%`)는 1이므로 `1 == 0`이 거짓이 되어 '홀수'가 출력됩니다." },
+                { q: "x = 3<br>if x > 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('크다')<br>위 코드를 실행하면 어떻게 될까요?", options: ["크다 출력", "작다 출력", "아무것도 출력되지 않고 종료됨", "에러 발생"], ans: 2, exp: "조건이 거짓인데 else 블록이 없으므로 아무것도 하지 않고 코드가 종료됩니다." }
+            ],
+            8: [ // WHILE문 (10문제) ⭐ NEW
+                { q: "i = 0<br>while i < 3:<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1<br>위 코드가 출력하는 숫자의 순서는?", options: ["0, 1, 2, 3", "1, 2, 3", "0, 1, 2", "0, 1"], ans: 2, exp: "i가 0, 1, 2일 때 출력되고, i가 3이 되는 순간 `3 < 3`이 거짓이 되어 루프를 탈출합니다." },
+                { q: "while 조건식에 항상 참이 되는 조건(예: True)을 넣었을 때 나타나는 현상은?", options: ["무한루프 (Infinite Loop)", "자동 종료", "문법 에러", "컴퓨터 자동 재부팅"], ans: 0, exp: "조건이 계속 참이면 멈추지 않고 맴도는 무한루프 상태에 빠지게 됩니다." },
+                { q: "n = 5<br>while n > 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print(n)<br>&nbsp;&nbsp;&nbsp;&nbsp;n = n - 1<br>에서 print(n)은 총 몇 번 실행될까요?", options: ["4번", "5번", "6번", "무한히 실행"], ans: 1, exp: "n이 5, 4, 3, 2, 1일 때 조건이 참이므로 총 5번 출력됩니다." },
+                { q: "var1 = 7<br>while var1 != 9:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('실행')<br>위 코드의 심각한 버그(문제점)는 무엇일까요?", options: ["var1 변수가 없음", "var1의 값이 변경되지 않아 무한루프에 빠짐", "!= 연산자 오류", "들여쓰기 오류"], ans: 1, exp: "반복문 안에서 var1의 값을 바꿔주지 않아서 7 != 9 조건이 평생 참이 되어 무한루프가 됩니다." },
+                { q: "text = 'yes'<br>while text == 'yes':<br>&nbsp;&nbsp;&nbsp;&nbsp;text = input('반복할까요? ')<br>사용자가 'no'를 입력하면 어떻게 될까요?", options: ["계속 입력창이 뜸", "반복을 종료하고 루프 탈출", "에러 뿜음", "yes가 자동 입력됨"], ans: 1, exp: "text에 'no'가 저장되면서 `text == 'yes'` 조건이 거짓이 되어 반복문이 종료됩니다." },
+                { q: "while 루프를 강제로 탈출하고 싶을 때 사용하는 파이썬 키워드는?", options: ["stop", "exit", "break", "end"], ans: 2, exp: "반복문 내부에서 `break`를 만나면 조건과 상관없이 즉시 루프를 탈출합니다." },
+                { q: "for문과 while문의 가장 큰 차이점으로 올바른 설명은?", options: ["for문은 출력이 안 된다", "while문은 반복을 못 한다", "for문은 횟수가 정해진 경우, while문은 조건에 따라 반복할 때 유리하다", "차이가 없다"], ans: 2, exp: "for문은 정해진 범위/횟수 반복에, while문은 특정 조건을 만족할 때까지 반복에 특화되어 있습니다." },
+                { q: "a = 10<br>while a >= 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('실행')<br>이 코드가 무한루프에 빠진 이유는?", options: ["a가 10으로 시작해서", "a의 값을 줄이는 코드가 없어서", "print가 잘못돼서", "while 뒤에 콜론이 없어서"], ans: 1, exp: "a = a - 1 같은 값 변경 코드가 없어서 a >= 0 조건이 영원히 유지되기 때문입니다." },
+                { q: "i = 1<br>while i <= 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1<br>print(i)<br>루프가 끝난 후 마지막에 print(i)가 출력하는 값은?", options: ["5", "6", "4", "1"], ans: 1, exp: "i가 5일 때 1이 더해져 6이 된 후, `6 <= 5` 조건 검사에서 거짓이 되어 탈출하므로 i는 6입니다." },
+                { q: "터미널 실행 중 실수로 빠진 무한루프를 강제 종료하는 단축키는?", options: ["Ctrl + C", "Ctrl + Z", "Alt + F4", "Enter"], ans: 0, exp: "콘솔/터미널 환경에서 진행 중인 파이썬 무한루프는 Ctrl + C 인터럽트로 강제 종료할 수 있습니다." }
+            ]
+        };
+
+        // 탭 전환 로직
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white');
+                btn.classList.add('text-slate-300');
+            });
+            btnElement.classList.add('active', 'text-white');
+            btnElement.classList.remove('text-slate-300');
+
+            document.querySelectorAll('.tab-content').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // 점수 및 퀴즈 렌더링
+        let currentScore = 0;
+        let attemptedQuestions = new Set();
+
+        function renderAllQuizzes() {
+            for (let secNum = 1; secNum <= 8; secNum++) {
+                const container = document.getElementById(`quiz-container-${secNum}`);
+                if (!container) continue;
+
+                const questions = quizData[secNum];
+                let htmlContent = '';
+                
+                questions.forEach((quiz, index) => {
+                    const qId = `s${secNum}_q${index}`;
+                    let optionsHtml = '';
+                    
+                    quiz.options.forEach((opt, optIndex) => {
+                        const alpha = ['A', 'B', 'C', 'D'][optIndex];
+                        optionsHtml += `
+                            <label class="option-label bg-slate-700 p-3 rounded-lg cursor-pointer flex items-center mb-2">
+                                <input type="radio" name="${qId}" value="${optIndex}" onchange="clearFeedback('${qId}')">
+                                <span class="option-text text-slate-300 ml-2">${alpha}) ${opt}</span>
+                            </label>
+                        `;
+                    });
+
+                    htmlContent += `
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 shadow-md flex flex-col">
+                            <div class="text-green-400 font-bold mb-1">Question ${index + 1}</div>
+                            <div class="text-base md:text-lg font-semibold text-white mb-4 leading-snug">${quiz.q}</div>
+                            <div class="flex-1">${optionsHtml}</div>
+                            <button id="btn-${qId}" class="mt-4 bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-colors w-full" onclick="checkAnswer(${secNum}, ${index})">정답 확인</button>
+                            <div id="fb-${qId}" class="feedback-box"></div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = htmlContent;
+            }
+        }
+
+        function clearFeedback(qId) {
+            const fb = document.getElementById(`fb-${qId}`);
+            if (fb) fb.style.display = 'none';
+        }
+
+        function checkAnswer(secNum, index) {
+            const qId = `s${secNum}_q${index}`;
+            const quiz = quizData[secNum][index];
+            const correctAnsIndex = quiz.ans;
+            const explanation = quiz.exp;
+
+            const radios = document.getElementsByName(qId);
+            let selectedIndex = -1;
+            
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) { selectedIndex = i; break; }
+            }
+
+            const fb = document.getElementById(`fb-${qId}`);
+            const btn = document.getElementById(`btn-${qId}`);
+
+            if (selectedIndex === -1) {
+                fb.className = 'feedback-box feedback-incorrect';
+                fb.style.display = 'block';
+                fb.innerHTML = `⚠️ 답을 먼저 선택해주세요!`;
+                return;
+            }
+
+            fb.style.display = 'block';
+
+            if (!attemptedQuestions.has(qId)) {
+                attemptedQuestions.add(qId);
+                
+                for (let i = 0; i < radios.length; i++) {
+                    radios[i].disabled = true;
+                }
+                
+                if (btn) {
+                    btn.disabled = true;
+                    btn.className = "mt-4 bg-slate-600 text-slate-400 font-bold py-2 px-4 rounded-lg w-full cursor-not-allowed";
+                    btn.innerText = "채점 완료";
+                }
+
+                if (selectedIndex === correctAnsIndex) {
+                    fb.className = 'feedback-box feedback-correct';
+                    fb.innerHTML = `🎉 정답입니다! (+10점) 버그를 성공적으로 잡았습니다.<div class="explanation-text">💡 <b>해설:</b> ${explanation}</div>`;
+                    
+                    currentScore += 10;
+                    const scoreBoard = document.getElementById('score-value').parentElement;
+                    document.getElementById('score-value').innerText = currentScore;
+                    
+                    scoreBoard.classList.add('scale-110', 'text-white', 'bg-green-600', 'border-green-400');
+                    setTimeout(() => {
+                        scoreBoard.classList.remove('scale-110', 'text-white', 'bg-green-600', 'border-green-400');
+                    }, 300);
+                } else {
+                    fb.className = 'feedback-box feedback-incorrect';
+                    const correctText = ['A', 'B', 'C', 'D'][correctAnsIndex];
+                    fb.innerHTML = `💥 버그 발생! 정답은 ${correctText} 입니다.<div class="explanation-text">🚨 <b>오류 원인:</b> ${explanation}</div>`;
+                }
+            }
+        }
+
+        window.onload = renderAllQuizzes;
+    </script>
+</body>
+</html>
