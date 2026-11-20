@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>삼일중 Python Survival - if문 & while문 마스터</title>
+    <title>삼일중 Python Survival - 파이널 총정리 &amp; 기타제어문</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background-color: #0f172a; color: #f8fafc; overflow-y: scroll; }
@@ -36,20 +36,23 @@
     </div>
 
     <header class="max-w-6xl mx-auto pt-10 pb-6 px-4 text-center">
+        <div class="inline-block bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold px-4 py-1 rounded-full text-sm md:text-base mb-3">
+            🎓 삼일중학교 SW동아리반 텍스트코딩 파이널 매치
+        </div>
         <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-300 to-blue-500 mb-3 drop-shadow-lg">
-            🐍 삼일중 Python Survival: if & while
+            🐍 삼일중 Python Survival: 최종 총정리
         </h1>
-        <p class="text-slate-400 text-base md:text-lg mb-2">기초 문법 복습부터 조건문(if)과 반복문(while) 버그 헌팅까지!</p>
+        <p class="text-slate-400 text-base md:text-lg mb-2">핵심 문법 8대장 복습부터 기타제어문(continue · break · pass) 버그 헌팅까지!</p>
     </header>
 
     <!-- 네비게이션 탭 -->
     <nav class="max-w-6xl mx-auto px-4 mb-8">
         <div class="flex flex-wrap justify-center bg-slate-800 rounded-xl p-2 gap-1 md:gap-2 shadow-xl border border-slate-700">
             <button class="tab-btn active px-3 py-2 md:px-4 md:py-3 rounded-lg font-bold text-slate-300 hover:text-white flex items-center gap-1" onclick="openTab('sec-0', this)">
-                <span>📘 1. 6대 문법 복습</span>
+                <span>📘 1. 전체 문법 복습 (8개)</span>
             </button>
             <button class="tab-btn px-3 py-2 md:px-4 md:py-3 rounded-lg font-bold text-slate-300 hover:text-white flex items-center gap-1" onclick="openTab('sec-02', this)">
-                <span>💡 2. 신규 개념 (IF & WHILE)</span>
+                <span>💡 2. 신규 개념 (continue/break/pass)</span>
             </button>
             <div class="w-px bg-slate-600 my-2"></div>
             <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-1', this)">1. PRINT (5문)</button>
@@ -58,19 +61,20 @@
             <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-4', this)">4. INT (5문)</button>
             <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-5', this)">5. F-STRING (5문)</button>
             <button class="tab-btn px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white" onclick="openTab('sec-6', this)">6. FOR (5문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-yellow-400 hover:text-yellow-300" onclick="openTab('sec-7', this)">7. IF문 (10문)</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-cyan-400 hover:text-cyan-300" onclick="openTab('sec-8', this)">8. WHILE문 (10문)</button>
             <div class="w-px bg-slate-600 my-2"></div>
-            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-yellow-400 hover:text-yellow-300 border border-yellow-500/30 bg-yellow-500/10" onclick="openTab('sec-7', this)">7. IF문 (10문)⭐</button>
-            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 bg-cyan-500/10" onclick="openTab('sec-8', this)">8. WHILE문 (10문)⭐</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-bold text-rose-400 hover:text-rose-300 border border-rose-500/40 bg-rose-500/10" onclick="openTab('sec-9', this)">9. 기타제어문 (10문)⭐</button>
         </div>
     </nav>
 
     <main id="main-content" class="max-w-6xl mx-auto px-4">
         
-        <!-- ==================== SHEET 1: 이전 시간 핵심 문법 6가지 복습 ==================== -->
+        <!-- ==================== SHEET 1: 그동안 배운 핵심 문법 8가지 총복습 ==================== -->
         <div id="sec-0" class="tab-content active space-y-8">
             <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-2xl">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-green-400 mb-6 flex items-center gap-3">
-                    🔄 이전 시간 핵심 문법 6가지 쾌속 복습
+                    🔄 그동안 배운 핵심 문법 8가지 총복습
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
@@ -110,105 +114,186 @@
                         <div class="bg-slate-950 p-3.5 rounded-lg text-emerald-300 font-mono text-base md:text-lg">for i in range(3): print(i)</div>
                     </div>
 
+                    <div class="bg-slate-900 p-6 rounded-xl border border-yellow-500/40">
+                        <div class="text-xl md:text-2xl text-yellow-400 font-extrabold mb-2">7. IF문 (갈림길 신호등 🚦)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">조건이 참(`True`)일 때만 실행. 콜론(`:`)과 들여쓰기 필수!</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-yellow-300 font-mono text-base md:text-lg">if score >= 80: print("합격!")</div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-xl border border-cyan-500/40">
+                        <div class="text-xl md:text-2xl text-cyan-400 font-extrabold mb-2">8. WHILE문 (조건부 도돌이표 🔄)</div>
+                        <p class="text-base md:text-lg text-slate-200 mb-3 leading-relaxed">조건이 참인 동안 계속 반복. 무한루프 탈출 조건 필수!</p>
+                        <div class="bg-slate-950 p-3.5 rounded-lg text-cyan-300 font-mono text-base md:text-lg">while hp > 0: hp -= 10</div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SHEET 2: 신규 개념 (IF문 & WHILE문) ==================== -->
+        <!-- ==================== SHEET 2: 신규 개념 (continue / break / pass) ==================== -->
         <div id="sec-02" class="tab-content space-y-10">
             
-            <!-- 1. [신규 개념] IF문 : 선택의 신호등 -->
-            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-yellow-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
+            <!-- 1. [신규 개념 1] CONTINUE : 이번 판만 스킵 버튼 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-amber-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
                 <div class="flex-1 space-y-4">
-                    <div class="inline-block bg-yellow-500/20 text-yellow-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 1</div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-yellow-400">1. if문 (조건문) : 갈림길 신호등 🚦</h2>
+                    <div class="inline-block bg-amber-500/20 text-amber-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 1</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-amber-400">1. continue : 이번 단계만 건너뛰기 ⏭️</h2>
                     <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
-                        "만약 ~라면 A를 하고, 아니면 B를 해라!" 상황에 따라 다른 행동을 하도록 기계에게 판단력을 선물하는 문법입니다.
+                        반복문을 완전히 끝내는 것이 아니라, <strong>현재 진행 중인 이번 차례만 쏙 건너뛰고(Skip)</strong> 다음 반복 순서로 넘어가는 명령어입니다.
                     </p>
                     
-                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-3 text-base md:text-lg">
-                        <div class="text-yellow-300 font-bold text-lg md:text-xl">⚠️ 중학생이 가장 많이 틀리는 핵심 규칙 3가지:</div>
-                        <ul class="list-disc list-inside text-slate-200 space-y-2">
-                            <li><span class="text-white font-bold">콜론(:) 필수:</span> <code class="text-yellow-300 font-bold">if 조건:</code> 끝에 반드시 쌍점(:)을 찍어야 합니다!</li>
-                            <li><span class="text-white font-bold">들여쓰기(Indentation):</span> 조건 아래 실행할 코드는 <span class="bg-slate-800 px-2 py-0.5 rounded text-yellow-300 font-bold">[Tab]</span>키나 공백 4칸으로 쑥 집어넣어야 합니다.</li>
-                            <li><span class="text-white font-bold">비교 연산자:</span> '같다'는 `=`가 아니라 <code class="text-green-400 font-bold text-xl">==</code> 두 번!</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
-                        age = <span class="text-yellow-300">int</span>(<span class="text-yellow-300">input</span>("나이 입력: "))<br>
-                        <span class="text-purple-400 font-bold">if</span> age &gt;= 14:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>("청소년입니다!") &nbsp;<span class="text-slate-500 text-base md:text-lg"># 참일 때</span><br>
-                        <span class="text-purple-400 font-bold">else</span>:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>("어린이입니다!") &nbsp;<span class="text-slate-500 text-base md:text-lg"># 거짓일 때</span>
-                    </div>
-                </div>
-
-                <!-- SVG 일러스트: 신호등/갈림길 -->
-                <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
-                    <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
-                        <!-- Traffic Light Box -->
-                        <rect x="15" y="15" width="55" height="130" rx="12" fill="#1e293b" stroke="#facc15" stroke-width="3"/>
-                        <circle cx="42" cy="42" r="14" fill="#ef4444"/> <!-- Red -->
-                        <circle cx="42" cy="80" r="14" fill="#eab308"/> <!-- Yellow -->
-                        <circle cx="42" cy="118" r="14" fill="#22c55e"/> <!-- Green -->
-                        
-                        <!-- Branching Path -->
-                        <path d="M 90 80 Q 120 80 140 40 L 195 40" fill="none" stroke="#ef4444" stroke-width="5" stroke-dasharray="5"/>
-                        <path d="M 90 80 Q 120 80 140 120 L 195 120" fill="none" stroke="#22c55e" stroke-width="5"/>
-                        
-                        <text x="160" y="30" font-family="sans-serif" font-size="14" fill="#fca5a5" font-weight="bold">거짓 (NO)</text>
-                        <text x="160" y="142" font-family="sans-serif" font-size="14" fill="#86efac" font-weight="bold">참 (YES)</text>
-                    </svg>
-                </div>
-            </div>
-
-            <!-- 2. [신규 개념] WHILE문 : 조건부 도돌이표 -->
-            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-cyan-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
-                <div class="flex-1 space-y-4">
-                    <div class="inline-block bg-cyan-500/20 text-cyan-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 2</div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-cyan-400">2. while문 (반복문) : 무한 탈곡기 도돌이표 🔄</h2>
-                    <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
-                        "조건이 참(True)인 동안 계속 코드를 돌려라!" 몬스터의 체력이 0이 될 때까지 계속 공격하거나, 정답을 맞힐 때까지 퀴즈를 반복할 때 사용합니다.
-                    </p>
-
-                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-3 text-base md:text-lg">
-                        <div class="text-cyan-300 font-bold text-lg md:text-xl">🚨 베테랑 엔지니어의 경고: 무한루프(Infinite Loop)를 조심해!</div>
-                        <p class="text-slate-200 leading-relaxed">
-                            `while`문은 조건이 거짓이 되지 않으면 컴퓨터가 멈출 때까지 계속 돕니다! 반드시 반복문 안에서 조건을 변경해주거나(예: <code class="text-yellow-300 font-bold">hp -= 10</code>), 탈출 조건(`break` 등)을 만들어주어야 합니다.
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2 text-base md:text-lg">
+                        <div class="text-amber-300 font-bold text-lg md:text-xl">💡 핵심 동작 원리:</div>
+                        <p class="text-slate-200">
+                            <code class="text-amber-300 font-bold">continue</code>를 만나는 순간 그 아래에 있는 코드는 실행하지 않고, 곧바로 다음 번호(<code class="text-green-400">i</code>)를 꺼내러 반복문 맨 위로 점프합니다!
                         </p>
                     </div>
 
                     <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
-                        hp = 30 &nbsp;<span class="text-slate-500 text-base md:text-lg"># 몬스터 체력</span><br>
-                        <span class="text-purple-400 font-bold">while</span> hp &gt; 0:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>(f"공격! 남아있는 HP: {hp}")<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;hp = hp - 10 &nbsp;<span class="text-yellow-300 text-base md:text-lg"># 체력 감소 필수!</span><br>
-                        <span class="text-blue-400">print</span>("몬스터 처치 완료!")
+                        <span class="text-purple-400 font-bold">for</span> i <span class="text-purple-400 font-bold">in</span> <span class="text-yellow-300">range</span>(1, 11):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400 font-bold">if</span> i == 5:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-amber-400 font-bold">continue</span> &nbsp;<span class="text-slate-500 text-base md:text-lg"># 5번만 건너뛰어라!</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>(i) &nbsp;<span class="text-slate-400 text-base md:text-lg"># 결과: 1, 2, 3, 4, 6, 7, 8, 9, 10 (5만 빠짐!)</span>
                     </div>
                 </div>
 
-                <!-- SVG 일러스트: 무한 챗바퀴 / 루프 -->
+                <!-- SVG 일러스트: 징검다리 건너뛰기 -->
                 <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
                     <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
-                        <!-- Looping Circle -->
-                        <path d="M 110 25 A 48 48 0 1 1 60 75" fill="none" stroke="#22d3ee" stroke-width="7" stroke-linecap="round"/>
-                        <polygon points="60,62 60,88 42,75" fill="#22d3ee"/>
+                        <rect x="18" y="95" width="38" height="38" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="3"/>
+                        <text x="37" y="120" font-family="sans-serif" font-size="16" fill="#4ade80" font-weight="bold" text-anchor="middle">4</text>
                         
-                        <text x="110" y="72" font-family="sans-serif" font-size="14" fill="#fff" font-weight="bold" text-anchor="middle">조건 참(True)</text>
-                        <text x="110" y="93" font-family="sans-serif" font-size="12" fill="#22d3ee" font-weight="bold" text-anchor="middle">⚡ 계속 반복 ⚡</text>
+                        <rect x="91" y="95" width="38" height="38" rx="8" fill="#7f1d1d" stroke="#f87171" stroke-width="3" stroke-dasharray="4"/>
+                        <text x="110" y="120" font-family="sans-serif" font-size="16" fill="#fca5a5" font-weight="bold" text-anchor="middle">5</text>
                         
-                        <!-- Exit Arrow -->
-                        <path d="M 158 75 L 195 75" fill="none" stroke="#ef4444" stroke-width="5" stroke-dasharray="4"/>
-                        <polygon points="195,68 207,75 195,82" fill="#ef4444"/>
-                        <text x="175" y="62" font-family="sans-serif" font-size="12" fill="#fca5a5" font-weight="bold">거짓 -> 탈출</text>
+                        <rect x="164" y="95" width="38" height="38" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="3"/>
+                        <text x="183" y="120" font-family="sans-serif" font-size="16" fill="#4ade80" font-weight="bold" text-anchor="middle">6</text>
+                        
+                        <!-- Jump arc over 5 -->
+                        <path d="M 37 90 Q 110 20 180 86" fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+                        <polygon points="183,91 172,85 182,78" fill="#fbbf24"/>
+                        <text x="110" y="32" font-family="sans-serif" font-size="14" fill="#fbbf24" font-weight="bold" text-anchor="middle">continue (5번 스킵!)</text>
                     </svg>
+                </div>
+            </div>
+
+            <!-- 2. [신규 개념 2] BREAK : 긴급 탈출 비상구 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-rose-500 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <div class="inline-block bg-rose-500/20 text-rose-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 2</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-rose-400">2. break : 반복문 즉시 중단 및 탈출 🚪</h2>
+                    <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
+                        "멈춰! 지금 당장 반복문을 부수고 밖으로 나가라!" 뒤에 반복할 횟수가 아무리 많이 남아 있어도 <strong>제어문을 그 즉시 완전히 종료</strong>합니다.
+                    </p>
+
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2 text-base md:text-lg">
+                        <div class="text-rose-300 font-bold text-lg md:text-xl">🚨 언제 사용할까?</div>
+                        <p class="text-slate-200">
+                            보물상자를 찾았을 때, 비밀번호를 맞혔을 때, 혹은 게임에서 캐릭터 체력이 0이 되어 게임을 즉시 종료해야 할 때 사용합니다!
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
+                        <span class="text-purple-400 font-bold">for</span> i <span class="text-purple-400 font-bold">in</span> <span class="text-yellow-300">range</span>(1, 11):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400 font-bold">if</span> i == 5:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-rose-400 font-bold">break</span> &nbsp;<span class="text-slate-500 text-base md:text-lg"># 5가 되면 반복문 완전 탈출!</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>(i) &nbsp;<span class="text-slate-400 text-base md:text-lg"># 결과: 1, 2, 3, 4 (5부터 끝!)</span>
+                    </div>
+                </div>
+
+                <!-- SVG 일러스트: 비상구 탈출 -->
+                <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
+                    <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
+                        <!-- Loop Box -->
+                        <rect x="15" y="25" width="115" height="110" rx="14" fill="#1e293b" stroke="#64748b" stroke-width="3" stroke-dasharray="6"/>
+                        <text x="72" y="55" font-family="sans-serif" font-size="13" fill="#94a3b8" font-weight="bold" text-anchor="middle">1 ~ 10 반복 중</text>
+                        <text x="72" y="88" font-family="sans-serif" font-size="16" fill="#f87171" font-weight="bold" text-anchor="middle">i == 5 도착!</text>
+                        
+                        <!-- Exit Door & Arrow -->
+                        <rect x="165" y="45" width="40" height="70" rx="4" fill="#065f46" stroke="#34d399" stroke-width="3"/>
+                        <text x="185" y="36" font-family="sans-serif" font-size="12" fill="#34d399" font-weight="bold" text-anchor="middle">EXIT</text>
+                        <path d="M 115 80 L 172 80" fill="none" stroke="#f43f5e" stroke-width="6" stroke-linecap="round"/>
+                        <polygon points="180,80 166,71 166,89" fill="#f43f5e"/>
+                        <text x="135" y="135" font-family="sans-serif" font-size="14" fill="#fda4af" font-weight="bold" text-anchor="middle">break (완전 종료!)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 3. [신규 개념 3] PASS : 아무 작업도 안 하는 빈 자리 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border-l-8 border-emerald-400 shadow-2xl flex flex-col lg:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <div class="inline-block bg-emerald-500/20 text-emerald-400 font-bold text-sm md:text-base px-4 py-1.5 rounded-full">NEW CONCEPT 3</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-emerald-400">3. pass : 아무 작업도 하지 않고 통과 👻</h2>
+                    <p class="text-slate-200 leading-relaxed text-lg md:text-xl font-medium">
+                        "지금은 아무 일도 하지 말고 조용히 지나가!" 반복을 멈추지도, 건너뛰지도 않고 <strong>그냥 빈칸을 채워주는 투명인간 명령어</strong>입니다.
+                    </p>
+
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-2 text-base md:text-lg">
+                        <div class="text-emerald-300 font-bold text-lg md:text-xl">🛠️ 엔지니어의 실무 활용법:</div>
+                        <p class="text-slate-200">
+                            파이썬은 <code class="text-yellow-300">if i == 5:</code> 아래에 코드가 비어 있으면 <strong>들여쓰기 에러(IndentationError)</strong>를 냅니다. 나중에 기능을 채워 넣기 위해 뼈대만 먼저 만들 때 <code class="text-emerald-400 font-bold">pass</code>를 써둡니다!
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-950 p-5 rounded-xl text-green-300 font-mono text-lg md:text-2xl leading-relaxed border border-slate-700 shadow-inner">
+                        <span class="text-purple-400 font-bold">for</span> i <span class="text-purple-400 font-bold">in</span> <span class="text-yellow-300">range</span>(1, 11):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400 font-bold">if</span> i == 5:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-emerald-400 font-bold">pass</span> &nbsp;<span class="text-slate-500 text-base md:text-lg"># 아무 일도 안 하고 아래로 진행!</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">print</span>(i) &nbsp;<span class="text-slate-400 text-base md:text-lg"># 결과: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 (모두 출력!)</span>
+                    </div>
+                </div>
+
+                <!-- SVG 일러스트: 투명 통과 -->
+                <div class="w-full lg:w-80 h-64 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shadow-inner p-4 relative shrink-0">
+                    <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-md">
+                        <rect x="65" y="30" width="90" height="45" rx="10" fill="#1e293b" stroke="#34d399" stroke-width="3" stroke-dasharray="5"/>
+                        <text x="110" y="58" font-family="monospace" font-size="16" fill="#34d399" font-weight="bold" text-anchor="middle">pass</text>
+                        
+                        <path d="M 30 110 L 185 110" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round"/>
+                        <polygon points="193,110 180,102 180,118" fill="#4ade80"/>
+                        
+                        <path d="M 110 75 L 110 105" fill="none" stroke="#34d399" stroke-width="3" stroke-dasharray="3"/>
+                        <text x="110" y="140" font-family="sans-serif" font-size="13" fill="#a7f3d0" font-weight="bold" text-anchor="middle">아무 변화 없이 그대로 진행!</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 4. 한눈에 보는 3대 기타제어문 비교표 -->
+            <div class="bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-2xl">
+                <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-4">📊 한눈에 비교하기 (<code class="text-yellow-300">for i in range(1, 11)</code> 에서 <code class="text-yellow-300">i == 5</code> 일 때)</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-base md:text-lg">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-300 border-b border-slate-700">
+                                <th class="p-4">명령어</th>
+                                <th class="p-4">핵심 역할</th>
+                                <th class="p-4">화면 출력 결과</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            <tr class="bg-slate-800/50">
+                                <td class="p-4 font-mono font-bold text-amber-400 text-xl">continue</td>
+                                <td class="p-4 text-slate-200">5번 차례만 건너뛰고 계속 반복</td>
+                                <td class="p-4 font-mono text-amber-300">1, 2, 3, 4, <span class="underline decoration-rose-500">(5 생략)</span>, 6, 7, 8, 9, 10</td>
+                            </tr>
+                            <tr class="bg-slate-800/50">
+                                <td class="p-4 font-mono font-bold text-rose-400 text-xl">break</td>
+                                <td class="p-4 text-slate-200">5번을 만나는 순간 반복문 완전 탈출</td>
+                                <td class="p-4 font-mono text-rose-300">1, 2, 3, 4 <span class="text-slate-400">(종료!)</span></td>
+                            </tr>
+                            <tr class="bg-slate-800/50">
+                                <td class="p-4 font-mono font-bold text-emerald-400 text-xl">pass</td>
+                                <td class="p-4 text-slate-200">아무 작업도 안 하고 다음 줄(`print(i)`) 실행</td>
+                                <td class="p-4 font-mono text-emerald-300">1, 2, 3, 4, 5, 6, 7, 8, 9, 10 <span class="text-slate-400">(전체 출력)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
 
-        <!-- ====================문제 컨테이너 (시트 3~10) ==================== -->
+        <!-- ==================== 문제 컨테이너 (시트 3~11: 총 60문항) ==================== -->
         <div id="sec-1" class="tab-content"><div id="quiz-container-1" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         <div id="sec-2" class="tab-content"><div id="quiz-container-2" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         <div id="sec-3" class="tab-content"><div id="quiz-container-3" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
@@ -217,11 +302,12 @@
         <div id="sec-6" class="tab-content"><div id="quiz-container-6" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         <div id="sec-7" class="tab-content"><div id="quiz-container-7" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         <div id="sec-8" class="tab-content"><div id="quiz-container-8" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        <div id="sec-9" class="tab-content"><div id="quiz-container-9" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
 
     </main>
 
     <script>
-        // 총 50개 문제 데이터베이스
+        // 총 60개 문제 데이터베이스 (기존 50문항 + 기타제어문 10문항)
         const quizData = {
             1: [ // PRINT (5문제)
                 { q: "print('파이썬', '재밌다') 코드를 실행했을 때 출력 결과는 무엇일까요?", options: ["파이썬재밌다", "파이썬 재밌다", "'파이썬' '재밌다'", "에러 발생"], ans: 1, exp: "print() 안에 쉼표(,)를 쓰면 항목 사이에 자동으로 한 칸 띄어쓰기가 들어갑니다." },
@@ -249,7 +335,7 @@
                 { q: "사용자에게 숫자를 입력받아 바로 진짜 정수로 저장하는 가장 완벽한 형태는?", options: ["num = input(int('숫자: '))", "num = int(input('숫자: '))", "num = int('숫자: ')", "num = input('int')"], ans: 1, exp: "input()으로 입력받은 문자열을 바깥의 int()로 감싸 번역해 주는 것이 정석입니다." },
                 { q: "num = int('hello') 코드를 실행하면 어떤 일이 벌어질까요?", options: ["hello 정수 변환 성공", "0이 출력됨", "ValueError 에러 발생", "None 반환"], ans: 2, exp: "숫자로 바꿀 수 없는 글자('hello')를 int()에 넣으면 번역할 수 없어 ValueError가 납니다." },
                 { q: "a = int(input()) 실행 후 5를 입력했을 때, a + 10의 결과는?", options: ["510", "15", "\"15\"", "에러"], ans: 1, exp: "int()를 통과했으므로 정수 5가 되어 5 + 10 = 15가 됩니다." },
-                { q: "다음 중 int() 함수에 대한 설명으로 틀린 것은?", options: ["문자열 형태의 숫자를 정수로 바꾼다.", "소수점 이하를 버리고 정수로 다듬는다.", "input()과 함께 자주 쓰인다.", "글자 '가나다'를 숫자 123으로 자동 แปล한다."], ans: 3, exp: "int()는 숫자 형태를 가진 문자열(\"123\" 등)만 정수로 변환할 수 있습니다." }
+                { q: "다음 중 int() 함수에 대한 설명으로 틀린 것은?", options: ["문자열 형태의 숫자를 정수로 바꾼다.", "소수점 이하를 버리고 정수로 다듬는다.", "input()과 함께 자주 쓰인다.", "글자 '가나다'를 숫자 123으로 자동 번역한다."], ans: 3, exp: "int()는 숫자 형태를 가진 문자열(\"123\" 등)만 정수로 변환할 수 있습니다." }
             ],
             5: [ // F-STRING (5문제)
                 { q: "name = '영희'<br>print(f'안녕 {name}')의 출력 결과는?", options: ["안녕 {name}", "안녕 영희", "f'안녕 영희'", "에러"], ans: 1, exp: "f-string 덕분에 {name} 자리에 변수 안의 데이터 '영희'가 쏙 들어갑니다." },
@@ -265,7 +351,7 @@
                 { q: "count = 0<br>for i in range(3):<br>&nbsp;&nbsp;&nbsp;&nbsp;count = count + 1<br>print(count) 의 실행 결과는?", options: ["0", "1", "3", "4"], ans: 2, exp: "루프가 3번 돌면서 count가 1씩 3번 증가하므로 최종값은 3이 됩니다." },
                 { q: "for i in range(0, 10, 2): 에서 i의 변화 순서로 알맞은 것은?", options: ["0, 1, 2, 3...", "0, 2, 4, 6, 8", "2, 4, 6, 8, 10", "0, 5, 10"], ans: 1, exp: "range(시작, 끝, 증감) 구조이므로 0부터 시작해 2씩 증가하며 10 전(8)까지 반복합니다." }
             ],
-            7: [ // IF문 (10문제) ⭐ NEW
+            7: [ // IF문 (10문제)
                 { q: "num = 5<br>if num > 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('양수')<br>위 코드를 실행한 결과는?", options: ["양수", "음수", "아무것도 출력 안 됨", "에러"], ans: 0, exp: "num이 5이므로 조건 `num > 0`이 참(True)이 되어 '양수'가 출력됩니다." },
                 { q: "if 조건식 뒤에 반드시 붙여야 하는 문법 기호는 무엇일까요?", options: ["; (세미콜론)", ": (콜론)", ", (쉼표)", ". (마침표)"], ans: 1, exp: "파이썬의 조건문과 반복문 선언부 끝에는 반드시 쌍점 `: (콜론)`을 찍어야 합니다." },
                 { q: "age = 10<br>if age > 12:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('OK')<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('NO')<br>위 코드의 출력 결과는?", options: ["OK", "NO", "OK와 NO 둘 다", "에러"], ans: 1, exp: "age가 10이므로 `age > 12` 조건이 거짓(False)이 되어 else 블록의 'NO'가 출력됩니다." },
@@ -277,7 +363,7 @@
                 { q: "num = 7<br>if num % 2 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('짝수')<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('홀수')<br>결과는?", options: ["짝수", "홀수", "7", "0"], ans: 1, exp: "7을 2로 나눈 나머지(`%`)는 1이므로 `1 == 0`이 거짓이 되어 '홀수'가 출력됩니다." },
                 { q: "x = 3<br>if x > 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('크다')<br>위 코드를 실행하면 어떻게 될까요?", options: ["크다 출력", "작다 출력", "아무것도 출력되지 않고 종료됨", "에러 발생"], ans: 2, exp: "조건이 거짓인데 else 블록이 없으므로 아무것도 하지 않고 코드가 종료됩니다." }
             ],
-            8: [ // WHILE문 (10문제) ⭐ NEW
+            8: [ // WHILE문 (10문제)
                 { q: "i = 0<br>while i < 3:<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1<br>위 코드가 출력하는 숫자의 순서는?", options: ["0, 1, 2, 3", "1, 2, 3", "0, 1, 2", "0, 1"], ans: 2, exp: "i가 0, 1, 2일 때 출력되고, i가 3이 되는 순간 `3 < 3`이 거짓이 되어 루프를 탈출합니다." },
                 { q: "while 조건식에 항상 참이 되는 조건(예: True)을 넣었을 때 나타나는 현상은?", options: ["무한루프 (Infinite Loop)", "자동 종료", "문법 에러", "컴퓨터 자동 재부팅"], ans: 0, exp: "조건이 계속 참이면 멈추지 않고 맴도는 무한루프 상태에 빠지게 됩니다." },
                 { q: "n = 5<br>while n > 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print(n)<br>&nbsp;&nbsp;&nbsp;&nbsp;n = n - 1<br>에서 print(n)은 총 몇 번 실행될까요?", options: ["4번", "5번", "6번", "무한히 실행"], ans: 1, exp: "n이 5, 4, 3, 2, 1일 때 조건이 참이므로 총 5번 출력됩니다." },
@@ -288,6 +374,18 @@
                 { q: "a = 10<br>while a >= 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print('실행')<br>이 코드가 무한루프에 빠진 이유는?", options: ["a가 10으로 시작해서", "a의 값을 줄이는 코드가 없어서", "print가 잘못돼서", "while 뒤에 콜론이 없어서"], ans: 1, exp: "a = a - 1 같은 값 변경 코드가 없어서 a >= 0 조건이 영원히 유지되기 때문입니다." },
                 { q: "i = 1<br>while i <= 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1<br>print(i)<br>루프가 끝난 후 마지막에 print(i)가 출력하는 값은?", options: ["5", "6", "4", "1"], ans: 1, exp: "i가 5일 때 1이 더해져 6이 된 후, `6 <= 5` 조건 검사에서 거짓이 되어 탈출하므로 i는 6입니다." },
                 { q: "터미널 실행 중 실수로 빠진 무한루프를 강제 종료하는 단축키는?", options: ["Ctrl + C", "Ctrl + Z", "Alt + F4", "Enter"], ans: 0, exp: "콘솔/터미널 환경에서 진행 중인 파이썬 무한루프는 Ctrl + C 인터럽트로 강제 종료할 수 있습니다." }
+            ],
+            9: [ // 기타제어문: continue / break / pass (10문제) ⭐ FINAL NEW
+                { q: "반복문 실행 중 '현재 단계만 건너뛰고 다음 반복 단계로 넘어가라'는 뜻을 가진 명령어는?", options: ["break", "continue", "pass", "stop"], ans: 1, exp: "continue는 해당 순서만 건너뛰고(Skip) 반복문의 다음 차례로 계속 진행하게 합니다." },
+                { q: "반복문을 그 즉시 중단하고 제어문 밖으로 완전히 빠져나갈 때 사용하는 명령어는?", options: ["continue", "pass", "break", "exit"], ans: 2, exp: "break는 남아있는 반복 횟수와 상관없이 반복문을 그 자리에서 즉시 종료시킵니다." },
+                { q: "조건문이나 반복문 안에서 '아무 작업도 하지 않고 그대로 지나가라'는 의미로 사용하는 명령어는?", options: ["pass", "break", "continue", "skip"], ans: 0, exp: "pass는 아무 동작도 수행하지 않으며, 문법적 자리 채우기용으로 주로 활용됩니다." },
+                { q: "for i in range(1, 11):<br>&nbsp;&nbsp;&nbsp;&nbsp;if i == 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>위 코드의 실행 결과로 올바른 것은?", options: ["1, 2, 3, 4", "1, 2, 3, 4, 6, 7, 8, 9, 10", "1부터 10까지 모두 출력", "5만 출력"], ans: 1, exp: "i가 5일 때 continue를 만나 아래의 print(i)를 건너뛰므로, 5만 제외된 1~4, 6~10이 출력됩니다." },
+                { q: "for i in range(1, 11):<br>&nbsp;&nbsp;&nbsp;&nbsp;if i == 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>위 코드의 실행 결과로 올바른 것은?", options: ["1, 2, 3, 4", "1, 2, 3, 4, 5", "1, 2, 3, 4, 6, 7, 8, 9, 10", "아무것도 출력 안 됨"], ans: 0, exp: "i가 1~4일 때는 출력되다가, i가 5가 되는 순간 break를 만나 반복문이 즉시 종료됩니다." },
+                { q: "for i in range(1, 11):<br>&nbsp;&nbsp;&nbsp;&nbsp;if i == 5:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>위 코드의 실행 결과는?", options: ["1, 2, 3, 4", "1, 2, 3, 4, 6, 7, 8, 9, 10", "1, 2, 3, 4, 5, 6, 7, 8, 9, 10", "에러 발생"], ans: 2, exp: "pass는 아무 작업도 하지 않고 통과하므로, 다음 줄인 print(i)가 정상 실행되어 1부터 10까지 모두 출력됩니다." },
+                { q: "개발자들이 코드 구조를 먼저 잡을 때 `if score > 90:` 아래에 `pass`를 적어두는 가장 큰 이유는?", options: ["실행 속도를 2배 빠르게 하려고", "블록 내부가 비어 있으면 IndentationError가 발생하기 때문", "변수를 자동 삭제하려고", "무한루프를 만들려고"], ans: 1, exp: "파이썬은 콜론(:) 아래에 들여쓰기 된 문장이 없으면 문법 에러가 나므로, 나중에 코드를 작성하기 위해 pass로 임시 자리를 채웁니다." },
+                { q: "for i in range(1, 6):<br>&nbsp;&nbsp;&nbsp;&nbsp;if i % 2 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>위 코드가 출력하는 숫자는 무엇일까요?", options: ["2, 4", "1, 3, 5", "1, 2, 3, 4, 5", "1, 2"], ans: 1, exp: "i가 짝수(2, 4)일 때마다 continue로 print(i)를 건너뛰므로 홀수인 1, 3, 5만 출력됩니다." },
+                { q: "while True:<br>&nbsp;&nbsp;&nbsp;&nbsp;cmd = input('명령: ')<br>&nbsp;&nbsp;&nbsp;&nbsp;if cmd == 'q':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<br>위 코드에서 무한루프를 빠져나가기 위해 입력해야 하는 글자는?", options: ["True", "cmd", "q", "break"], ans: 2, exp: "사용자가 'q'를 입력하면 `cmd == 'q'` 조건이 참이 되어 break가 실행되고 무한루프가 종료됩니다." },
+                { q: "게임에서 보물상자 10개를 차례로 열다가 '황금 열쇠'를 발견한 순간 탐색을 멈추고 싶다면 어떤 키워드를 써야 할까요?", options: ["pass", "continue", "break", "range"], ans: 2, exp: "원하는 목표를 달성하여 나머지 반복 탐색을 즉시 중단할 때는 break가 가장 적합합니다." }
             ]
         };
 
@@ -309,7 +407,7 @@
         let attemptedQuestions = new Set();
 
         function renderAllQuizzes() {
-            for (let secNum = 1; secNum <= 8; secNum++) {
+            for (let secNum = 1; secNum <= 9; secNum++) {
                 const container = document.getElementById(`quiz-container-${secNum}`);
                 if (!container) continue;
 
